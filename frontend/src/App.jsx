@@ -2,11 +2,12 @@ import { useState } from 'react';
 import './App.css'
 import TransactionForm from './components/TransactionForm';
 import TransactionList from './components/TransactionList';
+import 'dotenv'
 
 function App() {
   const [transactions, setTransactions] = useState([]);
   const url = import.meta.env.VITE_API_URL;
-  
+
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
   };
