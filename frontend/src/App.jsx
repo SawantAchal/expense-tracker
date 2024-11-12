@@ -5,14 +5,15 @@ import TransactionList from './components/TransactionList';
 
 function App() {
   const [transactions, setTransactions] = useState([]);
-  const url = "http://localhost:5000"
+  const url = import.meta.env.VITE_API_URL;
+  
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
   };
 
   return (
     <>
-      <h1>Expense Tracker</h1>
+      <h1 className='text-center text-2xl font-bold mt-3'>Expense Tracker</h1>
       <TransactionForm onAddTransaction={addTransaction} url={url}/>
       <TransactionList transactions={transactions} url={url}/>
     </>
