@@ -1,24 +1,29 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify';
 
 const TransactionForm = ({ onAddTransaction  , url}) => {
     const [form, setForm] = useState({
         title:'',
         description: '',
-        // category: '',
         amount: '',
-        type: 'income', // default set to income
+        type: 'income',
       });
 
       const onFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${url}/api/transaction/add-income` , form)
+          const response = await axios.post(`${url}/api/transaction/add-income` , form)
+          if (response.data.success) {
+            toast.success("Transaction Added Successfully!");
             onAddTransaction(response.data)
-            console.log(response.data)
             setForm({title:'' , description: '', amount: '', type: 'income' });
+          }else {
+            toast.error("Failed to Add Transaction.");
+          }
         } catch (error) {
-            console.error('Error adding transaction:', error);
+          console.error('Error adding transaction:', error);
+          toast.error("Error adding transaction.");
         }
       }
       
@@ -27,7 +32,6 @@ const TransactionForm = ({ onAddTransaction  , url}) => {
       <form onSubmit={onFormSubmit} className="space-y-4 max-w-lg mx-auto p-6 bg-white rounded shadow">
         <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required placeholder='title' className="w-full p-2 border rounded"/>
         <input type="text" placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required className="w-full p-2 border rounded"/>
-        {/* <input type="text" placeholder="Category" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} required className="w-full p-2 border rounded"/> */}
         <input type="number" placeholder="Amount" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} required className="w-full p-2 border rounded"/>
         <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full p-2 border rounded">
           <option value="income">Income</option>
