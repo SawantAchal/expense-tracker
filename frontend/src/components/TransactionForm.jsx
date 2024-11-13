@@ -16,7 +16,7 @@ const TransactionForm = ({ onAddTransaction  , url}) => {
             const response = await axios.post(`${url}/api/transaction/add-income` , form)
             onAddTransaction(response.data)
             console.log(response.data)
-            setForm({title:'' , description: '', category: '', amount: '', type: 'income' });
+            setForm({title:'' , description: '', amount: '', type: 'income' });
         } catch (error) {
             console.error('Error adding transaction:', error);
         }
