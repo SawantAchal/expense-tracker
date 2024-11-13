@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { toast } from 'react-toastify';
 
 // Register chart components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -39,9 +40,11 @@ const TransactionList = ({ url }) => {
       const response = await axios.post(`${url}/api/transaction/delete-transaction`, { id });
       if (response.data.success) {
         fetchAllTransaction();
+        toast.success("Transaction delete ")
       }
     } catch (error) {
       console.error('Error deleting transaction:', error);
+      toast.error('Error deleting transaction')
     }
   };
 
