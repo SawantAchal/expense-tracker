@@ -272,6 +272,17 @@ const TransactionList = ({ url }) => {
     }
   };
 
+    const handleDelete = async (id) => {
+    try {
+      const response = await axios.post(`${url}/api/transaction/delete-transaction`, { id });
+      if (response.data.success) {
+        fetchAllTransaction(); // Refresh the list
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
+
   useEffect(() => {
     fetchAllTransaction();
   }, []);
