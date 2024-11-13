@@ -305,6 +305,12 @@ const TransactionList = ({ url }) => {
       
       <div className="bg-white shadow rounded p-4 mb-6 w-72">
         <Doughnut data={data} />
+        <div className="text-center mt-4">
+          <p className="text-lg font-semibold">Remaining Balance</p>
+          <p className={`text-2xl font-bold ${totals.net >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+            Rs. {totals.net}
+          </p>
+        </div>
       </div>
 
       <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
