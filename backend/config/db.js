@@ -1,7 +1,7 @@
 // file to connect database
 import mongoose from 'mongoose'
 export const connectDB = async () => {
-  const mongoURL = process.env.MONGODB_URL;
+  const mongoURL = process.env.VITE_MONGODB_URL;
   if (!mongoURL) {
     console.error('MongoDB URL not found in environment variables');
     return;
