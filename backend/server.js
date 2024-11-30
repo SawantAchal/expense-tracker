@@ -10,8 +10,8 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
-app.use(cors({origin: process.env.VITE_FRONTEND_URL}))
-
+// app.use(cors({origin: process.env.VITE_FRONTEND_URL}))
+app.use(cors())
 //connect db
 connectDB()
 
