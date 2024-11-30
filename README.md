@@ -2,7 +2,7 @@
   An Expense Tracker web application built with **Vite** and **React** on the frontend, and a **Node.js/Express** backend with **MongoDB** for data storage. 
   This application allows users to track their income and expenses, view a visual summary, and categorize transactions.
 
-  **Deploy link** - https://github.com/SawantAchal/expense-tracker.git
+  **Deploy link** - https://expense-tracker-frontend-t9wr.onrender.com/
   
   ## Features ## 
   - **Add Transactions**: Users can add income or expense transactions with title, description, category, amount, and type.
