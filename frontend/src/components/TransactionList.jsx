@@ -4,10 +4,8 @@ import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { toast } from 'react-toastify';
 
-// Register chart components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// calculateTotals function
 const calculateTotals = (transactions) => {
   const income = transactions
     .filter((t) => t.type === 'income')
@@ -27,7 +25,6 @@ const TransactionList = ({ url }) => {
       const response = await axios.get(`${url}/api/transaction/all-transaction`);
       const transactionsData = response.data.data;
       setTransactions(transactionsData);
-      // Use calculateTotals to get totals
       const totalsData = calculateTotals(transactionsData);
       setTotals(totalsData);
     } catch (error) {
@@ -35,16 +32,16 @@ const TransactionList = ({ url }) => {
     }
   };
 
-    const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
     try {
       const response = await axios.post(`${url}/api/transaction/delete-transaction`, { id });
       if (response.data.success) {
         fetchAllTransaction();
-        toast.success("Transaction delete ")
+        toast.success("Transaction deleted");
       }
     } catch (error) {
       console.error('Error deleting transaction:', error);
-      toast.error('Error deleting transaction')
+      toast.error('Error deleting transaction');
     }
   };
 
@@ -52,50 +49,54 @@ const TransactionList = ({ url }) => {
     fetchAllTransaction();
   }, []);
 
-  // Chart Data Configuration
   const data = {
     labels: ['Income', 'Expenses'],
     datasets: [
       {
         data: [totals.income, totals.expense],
-        backgroundColor: ['#4CAF50', '#F44336'], // Green for income, red for expenses
-        hoverBackgroundColor: ['#66BB6A', '#E57373'],
+        backgroundColor: ['#34D399', '#F87171'],
+        hoverBackgroundColor: ['#4ADE80', '#FB7185'],
       },
     ],
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Summary</h2>
-      <div className="bg-white shadow rounded p-4 mb-6 w-72">
-        <Doughnut data={data} />
-        <div className="text-center mt-4">
+    <div className="max-w-3xl mx-auto p-6">
+      <h2 className="text-3xl font-bold text-center text-white mb-6">Transaction Summary</h2>
+
+      <div className='flex justify-center items-center'>
+      <div className="bg-white shadow-lg rounded-lg p-6 mb-6 w-96">
+        <Doughnut data={data} className=''/>
+        <div className="text-center mt-6">
           <p className="text-lg font-semibold">Remaining Balance</p>
-          <p className={`text-2xl font-bold ${totals.net >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+          <p className={`text-3xl font-bold ${totals.net >= 0 ? 'text-green-600' : 'text-red-600'}`}>
             Rs. {totals.net}
           </p>
         </div>
       </div>
-      <h2 className="text-2xl font-semibold mb-4">Transactions</h2>
+      </div>
+
+
+      <h2 className="text-2xl font-bold text-white mb-4">Transactions</h2>
       <div className="space-y-4">
-        {
-          transactions.map((transaction) => (
-            <div key={transaction._id} className="flex justify-between items-center bg-gray-100 p-4 rounded shadow">
-              <div>
-                <p className="font-semibold">{transaction.description}</p>
-                <p className="text-gray-600 text-sm">{new Date(transaction.createdAt).toLocaleDateString()}</p>
-                <p className="text-gray-600 text-sm">{transaction.category}</p>
-                <p className={`text-sm font-bold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                  Rs.{transaction.amount}
-                </p>
-                <p className="text-gray-600 text-sm">{transaction.type}</p>
-              </div>
-              <button onClick={() => handleDelete(transaction._id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded">
-                Delete
-              </button>
+        {transactions.map((transaction) => (
+          <div key={transaction._id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md">
+            <div>
+              <p className="font-semibold text-gray-800">{transaction.description}</p>
+              <p className="text-gray-600 text-sm">{new Date(transaction.createdAt).toLocaleDateString()}</p>
+              <p className="text-gray-600 text-sm">{transaction.category}</p>
+              <p className={`text-sm font-bold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
+                Rs. {transaction.amount}
+              </p>
             </div>
-          ))
-        }
+            <button 
+              onClick={() => handleDelete(transaction._id)} 
+              className="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-all duration-300"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
