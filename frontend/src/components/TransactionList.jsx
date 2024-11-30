@@ -65,7 +65,7 @@ const TransactionList = ({ url }) => {
       <h2 className="text-3xl font-bold text-center text-white mb-6">Transaction Summary</h2>
 
       <div className='flex justify-center items-center'>
-      <div className="bg-white shadow-lg rounded-lg p-6 mb-6 w-96">
+      <div className="bg-white shadow-lg rounded-lg p-6 mb-6 md:w-96 w-48">
         <Doughnut data={data} className=''/>
         <div className="text-center mt-6">
           <p className="text-lg font-semibold">Remaining Balance</p>
