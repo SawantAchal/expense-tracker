@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [transactions, setTransactions] = useState([]);
-  const url = "http://localhost:5000";
+  const url = import.meta.env.VITE_API_URL;
 
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
